@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import Select from 'react-select';
-import { fetchBreeds } from 'api';
+import { fetchBreeds } from 'components/Api';
 import FadeLoader from 'react-spinners/FadeLoader';
 
 export class BreedSelect extends Component {
@@ -15,7 +15,7 @@ export class BreedSelect extends Component {
       this.setState({ isLoaidingFirst: true });
       const breedFirst = await fetchBreeds();
       this.setState({ breeds: breedFirst });
-    } catch (error) {
+    } catch {
       this.setState({
         error: 'Упс породы собак перезагразите страницу ещё раз',
       });
@@ -38,7 +38,11 @@ export class BreedSelect extends Component {
 
     return (
       <div>
-        <Select options={options} onChange={option => onSelect(option.value)} />
+        <Select
+          options={options}
+          isLoading={isLoaidingFirst}
+          onChange={option => onSelect(option.value)}
+        />
         <FadeLoader
           color="#36d7b7"
           loading={isLoaidingFirst}

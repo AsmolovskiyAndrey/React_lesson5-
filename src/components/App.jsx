@@ -1,8 +1,9 @@
 import { Component } from 'react';
-import { fetchDogByBreed } from 'api';
+import { fetchDogByBreed } from 'components/Api';
 import { Dog } from './Dog';
 import { BreedSelect } from './BreedSelect';
 import { DogSkeleton } from './DogSkeleton';
+import css from './App.module.css';
 
 export class App extends Component {
   state = {
@@ -24,16 +25,16 @@ export class App extends Component {
   };
 
   render() {
-    const { breeds, dog, error, isLoaidingDog } = this.state;
+    const { dog, error, isLoaidingDog } = this.state;
 
     return (
-      <>
-        <BreedSelect breeds={breeds} onSelect={this.selectBreed} />
+      <div className={css.main}>
+        <BreedSelect onSelect={this.selectBreed} />
         {error && <div>{error}</div>}
 
         {isLoaidingDog && <DogSkeleton />}
         {dog && !isLoaidingDog && <Dog dog={dog} />}
-      </>
+      </div>
     );
   }
 }
