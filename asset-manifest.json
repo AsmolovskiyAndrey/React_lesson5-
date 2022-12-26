@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/React_lesson5_week3/static/css/main.51019851.css",
-    "main.js": "/React_lesson5_week3/static/js/main.cb903520.js",
+    "main.js": "/React_lesson5_week3/static/js/main.a332f97b.js",
     "index.html": "/React_lesson5_week3/index.html",
     "main.51019851.css.map": "/React_lesson5_week3/static/css/main.51019851.css.map",
-    "main.cb903520.js.map": "/React_lesson5_week3/static/js/main.cb903520.js.map"
+    "main.a332f97b.js.map": "/React_lesson5_week3/static/js/main.a332f97b.js.map"
   },
   "entrypoints": [
     "static/css/main.51019851.css",
-    "static/js/main.cb903520.js"
+    "static/js/main.a332f97b.js"
   ]
 }
