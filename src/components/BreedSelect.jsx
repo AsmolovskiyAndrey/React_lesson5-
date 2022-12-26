@@ -39,7 +39,7 @@ export class BreedSelect extends Component {
     return (
       <div>
         <Select options={options} onChange={option => onSelect(option.value)} />
-        <FadeLoader //! Спиннер для первой загрузки
+        <FadeLoader
           color="#36d7b7"
           loading={isLoaidingFirst}
           size={100}

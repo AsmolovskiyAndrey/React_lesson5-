@@ -24,7 +24,7 @@ export class App extends Component {
   };
 
   render() {
-    const { breeds, dog, error, isLoaidingFirst, isLoaidingDog } = this.state;
+    const { breeds, dog, error, isLoaidingDog } = this.state;
 
     return (
       <>
