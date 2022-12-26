@@ -1,30 +1,15 @@
 import { Component } from 'react';
-import { fetchBreeds, fetchDogByBreed } from 'api';
+import { fetchDogByBreed } from 'api';
 import { Dog } from './Dog';
 import { BreedSelect } from './BreedSelect';
-import FadeLoader from 'react-spinners/FadeLoader';
+import { DogSkeleton } from './DogSkeleton';
 
 export class App extends Component {
   state = {
-    breeds: [],
     dog: null,
     error: null,
     isLoaidingDog: false,
   };
-
-  async componentDidMount() {
-    try {
-      this.setState({ isLoaidingDog: true });
-      const breedFirst = await fetchBreeds();
-      this.setState({ breeds: breedFirst });
-    } catch (error) {
-      this.setState({
-        error: 'Упс породы собак перезагразите страницу ещё раз',
-      });
-    } finally {
-      this.setState({ isLoaidingDog: false });
-    }
-  }
 
   selectBreed = async briedId => {
     try {
@@ -39,21 +24,14 @@ export class App extends Component {
   };
 
   render() {
-    const { breeds, dog, error, isLoaidingDog } = this.state;
-    // <ClockLoader color="#36d7b7" />;
+    const { breeds, dog, error, isLoaidingFirst, isLoaidingDog } = this.state;
 
     return (
       <>
         <BreedSelect breeds={breeds} onSelect={this.selectBreed} />
         {error && <div>{error}</div>}
 
-        <FadeLoader
-          color="#36d7b7"
-          loading={isLoaidingDog}
-          size={100}
-          aria-label="Loading Spinner"
-        />
-
+        {isLoaidingDog && <DogSkeleton />}
         {dog && !isLoaidingDog && <Dog dog={dog} />}
       </>
     );
