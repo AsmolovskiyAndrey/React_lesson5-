@@ -9,21 +9,30 @@ export class App extends Component {
   state = {
     breeds: [],
     dog: null,
+    error: null,
   };
 
   async componentDidMount() {
     try {
       const response = await axios.get('/breeds');
       this.setState({ breeds: response.data });
-    } catch (error) {}
+    } catch (error) {
+      this.setState({
+        error: 'Упс породы собак перезагразите страницу ещё раз',
+      });
+    }
   }
 
   selectBreed = async option => {
     try {
-      const resp = await axios.get(`/images/search?breed_id=${option.value}`);
+      // const resp = await axios.get(`/images/search?breed_id=${option.value}`);
+      const resp = await axios.get(`/images/search`, {
+        params: { breed_id: option.value },
+      });
       this.setState({ dog: resp.data[0] });
-      // console.log(resp.data[0]);
-    } catch (error) {}
+    } catch (error) {
+      this.setState({ error: 'Упс собака сбежала и мы не смогли её найти' });
+    }
   };
 
   buildSelectOptions = () => {
@@ -34,14 +43,21 @@ export class App extends Component {
   };
 
   render() {
+    const { dog, error } = this.state;
     const options = this.buildSelectOptions();
 
     return (
       <>
         <Select options={options} onChange={this.selectBreed} />
-        {this.state.dog && (
-          <div>
-            <img src={this.state.dog.url} width="480" alt="dog" />
+        {error && <div>{error}</div>}
+        {dog && (
+          <div style={{ display: 'flex', gap: 16 }}>
+            <img src={dog.url} width="480" alt="dog" />
+            <div>
+              <p>Name: {dog.breeds[0].name}</p>
+              <p>Bred for: {dog.breeds[0].bred_for}</p>
+              <p>Temperament: {dog.breeds[0].temperament}</p>
+            </div>
           </div>
         )}
       </>
