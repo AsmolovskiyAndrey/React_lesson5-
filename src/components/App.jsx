@@ -8,6 +8,7 @@ axios.defaults.headers.common['x-api-key'] = process.env.REACT_APP_API_KEY;
 export class App extends Component {
   state = {
     breeds: [],
+    dog: null,
   };
 
   async componentDidMount() {
@@ -17,8 +18,12 @@ export class App extends Component {
     } catch (error) {}
   }
 
-  selectBreed = option => {
-    console.log(option);
+  selectBreed = async option => {
+    try {
+      const resp = await axios.get(`/images/search?breed_id=${option.value}`);
+      this.setState({ dog: resp.data[0] });
+      // console.log(resp.data[0]);
+    } catch (error) {}
   };
 
   buildSelectOptions = () => {
@@ -34,6 +39,11 @@ export class App extends Component {
     return (
       <>
         <Select options={options} onChange={this.selectBreed} />
+        {this.state.dog && (
+          <div>
+            <img src={this.state.dog.url} width="480" alt="dog" />
+          </div>
+        )}
       </>
     );
   }
